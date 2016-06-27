@@ -15,6 +15,7 @@ $LOAD_PATH.unshift File.dirname(__FILE__)
 require 'sinatra/base'
 require 'data_mapper'
 require '003_task'
+require 'list'
 
 DATABASE_URL = ENV['DATABASE_URL'] || 'postgres://localhost/to_do_app'
 
@@ -45,6 +46,12 @@ class ToDoApp < Sinatra::Base
     task = Task.get(params[:id])
     task.destroy
     redirect '/'
+  end
+
+  post '/export' do
+    list = List.new(Task.all)
+    gist = Gist.gist(list.to_markdown, filename: 'To Do List.md')
+    redirect gist['html_url']
   end
 
 end
