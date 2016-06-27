@@ -7,6 +7,7 @@ class Forecast
   WEATHER_UNDERGROUND_API_KEY = ENV['WEATHER_UNDERGROUND_API_KEY']
 
   def self.ten_day_forecast(state,city)
+    raise 'You must provide a Weather Undergeround API KEY!' unless WEATHER_UNDERGROUND_API_KEY
     url = "/api/#{ WEATHER_UNDERGROUND_API_KEY }/forecast10day/q/#{ state }/#{ city }.json"
     consume(CONNECTION.get(url).body)
   end
