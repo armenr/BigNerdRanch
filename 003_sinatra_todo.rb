@@ -16,7 +16,7 @@ require 'sinatra/base'
 
 class ToDoApp < Sinatra::Base
   get '/' do
+    @tasks = ['Create web application', 'Profit!']
     erb :index
   end
 end
-
