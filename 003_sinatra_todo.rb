@@ -18,15 +18,24 @@ require '003_task'
 
 class ToDoApp < Sinatra::Base
   get '/' do
-    # @tasks = ['Create web application', 'Profit!']
-    # @tasks = [Task.new(description: 'Create web application'),
-    #           Task.new(description: 'Profit!')]
     @tasks = Task.all
     erb :index
   end
 
   post '/' do
     Task.create(params)
+    redirect '/'
+  end
+
+  patch '/:id' do
+    task = Task.get(params[:id])
+    task.update(done: params[:done])
+    redirect '/'
+  end
+
+  delete '/:id' do
+    task = Task.get(params[:id])
+    task.destroy
     redirect '/'
   end
 

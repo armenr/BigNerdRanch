@@ -10,7 +10,7 @@ class SimpleStore
 
   def update(attributes)
     attributes.each_pair do |attribute,value|
-      self.public_send "#attribute=", value
+      self.public_send "#{attribute}=", value
     end
   end
 
