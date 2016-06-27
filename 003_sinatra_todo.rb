@@ -20,6 +20,3 @@ class ToDoApp < Sinatra::Base
   end
 end
 
-#config.ru
-require './todo'
-run ToDoApp
