@@ -16,6 +16,7 @@ require 'sinatra/base'
 require 'data_mapper'
 require '003_task'
 require 'list'
+require 'forecast'
 
 DATABASE_URL = ENV['DATABASE_URL'] || 'postgres://localhost/to_do_app'
 
@@ -28,11 +29,27 @@ Task.auto_upgrade!
 class ToDoApp < Sinatra::Base
   get '/' do
     @tasks = Task.all
+    @forecast = Forecast.ten_day_forecast('GA', 'Atlanta')
     erb :index
   end
 
   post '/' do
     Task.create(params)
+    redirect '/'
+  end
+
+  get '/:id' do
+    @task = Task.get(params[:id])
+    erb :show
+  end
+
+  put '/:id' do
+    task = Task.get(params[:id])
+    task.update(
+            description: params[:description],
+            done: params[:done],
+            due_date: params[:due_date]
+    )
     redirect '/'
   end
 
