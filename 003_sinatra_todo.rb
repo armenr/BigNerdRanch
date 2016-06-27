@@ -11,12 +11,23 @@
 
 
 # Modular style below
+$LOAD_PATH.unshift File.dirname(__FILE__)
 
 require 'sinatra/base'
+require '003_task'
 
 class ToDoApp < Sinatra::Base
   get '/' do
-    @tasks = ['Create web application', 'Profit!']
+    # @tasks = ['Create web application', 'Profit!']
+    # @tasks = [Task.new(description: 'Create web application'),
+    #           Task.new(description: 'Profit!')]
+    @tasks = Task.all
     erb :index
   end
+
+  post '/' do
+    Task.create(params)
+    redirect '/'
+  end
+
 end
