@@ -9,12 +9,20 @@
 # you just ran this with Ruby
 # "Classic style" sinatra app
 
-
 # Modular style below
 $LOAD_PATH.unshift File.dirname(__FILE__)
 
 require 'sinatra/base'
+require 'data_mapper'
 require '003_task'
+
+DATABASE_URL = ENV['DATABASE_URL'] || 'postgres://localhost/to_do_app'
+
+DataMapper::Logger.new($stdout, :debug)
+DataMapper.setup(:default, DATABASE_URL)
+
+DataMapper.finalize
+Task.auto_upgrade!
 
 class ToDoApp < Sinatra::Base
   get '/' do

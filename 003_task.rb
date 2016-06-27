@@ -1,14 +1,27 @@
-require '003_simple_store'
+# class Task < SimpleStore
+#   # attr_accessor :description, :done
+#   #
+#   # def to_s
+#   #   description
+#   # end
+#   #
+#   # def done?
+#   #   done
+#   # end
+#
+#
+#
+# end
 
-class Task < SimpleStore
-  attr_accessor :description, :done
+class Task
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :description, String
+  property :done, Boolean
 
   def to_s
-    description
-  end
-
-  def done?
-    done
+    description.to_s
   end
 
 end
